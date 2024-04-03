@@ -2,13 +2,13 @@
   <div class="container mx-auto p-6 w-full lg:w-full xl:w-3/4 3xl:w-3/5 h-full flex-col flex justify-center text-on-surface-variant">
     <Transition name="slide-fade" mode="out-in">
       <div v-if="errorMessage.length === 0">
-        <div v-if="isFetchingColleges || isFetchingTatakform" key="loading" class="flex flex-col gap-2.5 justify-center items-center h-full">
+        <div v-if="isFetchingColleges" key="loading" class="flex flex-col gap-2.5 justify-center items-center h-full">
           <md-linear-progress indeterminate />
           <span>Fetching {{ 'colleges' }}...</span>
         </div>
         <div v-else>
           
-          <p class="text-center font-medium text-outline">Step 1: Select your college</p>
+          <p class="text-center font-bold text-2xl text-primary">Select your college</p>
           <div class="grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-4 mt-6">
             <div
               v-for="college in colleges"
@@ -51,7 +51,6 @@
 
 <script lang="ts" setup>
 import { toast } from "vue3-toastify";
-import { useRoute } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { Endpoints, makeRequest } from '~/network/request';
 import { icon } from "~/utils/icon";
@@ -76,10 +75,8 @@ import coe from "~/assets/img/tatakform/colleges/coe.png";
 import csw from "~/assets/img/tatakform/colleges/csw.png";
 import cte from "~/assets/img/tatakform/colleges/cte.png";
 
-import dayjs from 'dayjs';
 import sal from "sal.js";
 
-const route = useRoute();
 const colleges = ref<CollegeModel[]>([]);
 const isFetchingColleges = ref(true);
 const errorMessage = ref("");

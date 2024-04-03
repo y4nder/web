@@ -3,13 +3,13 @@
     <div class="flex items-center justify-center w-full h-full">
       <div class="">
         <h2 class="text-2xl md:text-3xl font-semibold mb-1 text-on-surface-variant">
-          Welcome
+          Welcome to <span class="text-primary">Tatak Forms!</span>
         </h2>
         <h6 class="text-sm">
           To login, please enter your credentials.
         </h6>
 
-        <div class="flex flex-col gap-1 mt-10 mb-6">
+        <div class="flex flex-col gap-1 mt-8 mb-3">
           <md-outlined-text-field
             :disabled="isLoggingIn"
             label="Student ID"
@@ -39,16 +39,7 @@
           </md-outlined-text-field>
         </div>
 
-        <div class="flex justify-end">
-          <p>
-          No Account Yet?
-          <span>
-          <a class="font-bold text-primary" href="/tatakforms/register">Register here</a>
-          </span>
-          </p>
-        </div>
-
-        <div class="flex justify-between items-center my-3">
+        <div class="flex justify-between items-center">
           <label class="flex items-center gap-3 text-sm">
             <md-checkbox @change="isRememberMe = !isRememberMe" :checked="isRememberMe" :disabled="isLoggingIn" />
             Remember Me
@@ -58,12 +49,18 @@
           </md-text-button>
         </div>
 
-        <div class="flex justify-end">
-          <md-filled-button @click="login" class="w-1/3" :disabled="isLoggingIn">
+        <div class="flex justify-center items-center mt-3">
+          <md-filled-button class="w-full" @click="login" :disabled="isLoggingIn">
             {{ isLoggingIn ? 'Logging in...' : 'Login' }}
           </md-filled-button>
         </div>
 
+        <div class="flex items-center justify-center gap-2 mt-4">
+          <p class="text-sm">Don't have an account yet?</p>
+          <router-link to="/tatakforms/register">
+            <md-text-button>Register</md-text-button>
+          </router-link>
+        </div>
       </div>
     </div>
 
@@ -87,9 +84,8 @@ import { toast } from "vue3-toastify";
 import { useStore } from "~/store";
 import { useRouter } from "vue-router";
 import { Endpoints, makeRequest } from "~/network/request";
-import { getStore, removeStore, setStore } from "~/utils/storage";
+import { getStore, setStore } from "~/utils/storage";
 import { AuthType } from "~/types/enums";
-import { LoginRequest } from "~/types/request";
 
 import DialogForgotPassword from "~/components/dialogs/DialogForgotPassword.vue";
 
@@ -132,7 +128,7 @@ function login() {
   }
 
   // Make request to server
-  makeRequest<LoginResponse, LoginRequest>("POST", Endpoints.TatakformsLogin, {
+  makeRequest<LoginResponse, { username: string, password: string}>("POST", Endpoints.TatakformsLogin, {
     username: id.value,
     password: password.value
   }, (response) => {
@@ -141,12 +137,12 @@ function login() {
 
     // if success
     if (response.success) {
-      
       // Save student tokens to local storage
       setStore("usat", response.data.accessToken);
       setStore("usrt", response.data.refreshToken);
+    
       // Set student
-      store.user = response.data.data;
+      store.user = response.data.user;
       store.role = AuthType.UNIV_ACCOUNT;
       // Set is logged in to true
       store.isUnivStudentLoggedIn = true;

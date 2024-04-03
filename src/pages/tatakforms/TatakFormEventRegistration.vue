@@ -4,9 +4,8 @@
       <div v-if="errorMessage.length === 0" class="flex flex-col items-center justify-center pb-5">
         <div class="flex flex-col space-y-5 w-full sm:w-3/4 lg:w-1/2 2xl:w-1/3 font-reset bg-surface-container p-6 lg:p-8 rounded-2xl">
           <div class="text-center mb-1" data-sal="slide-right" data-sal-repeat>
-            <h4 class="mb-1 text-lg lg:text-2xl font-bold"><span class="text-primary"></span>Registration</h4>
-            <hr class="mt-3 mb-6 border-surface-container-highest" />
-            <p class="text-outline text-xs lg:text-sm">You are selecting {{ college?.name }}</p>
+            <h4 class="mb-1 text-lg lg:text-2xl font-bold"><span class="text-primary">Tatakforms</span> Registration</h4>
+            <p class="text-outline">Once created, your account will be used for all Tatakforms events!</p>
           </div>
   
           <!-- Student ID -->
@@ -33,44 +32,7 @@
               <md-icon slot="leading-icon" v-html="icon('person', true)" />
             </md-filled-text-field> 
           </div>
-      
-          <!-- Email -->
-          <md-filled-text-field
-            data-sal="zoom-in"
-            data-sal-repeat
-            v-model.trim="email"
-            type="email"
-            label="Email"
-            :disabled="store.isLoading"
-            supportingText="Make sure to use your valid email address."
-          >
-            <md-icon slot="leading-icon" v-html="icon('mail', true)" />
-          </md-filled-text-field>
 
-          <!-- Password -->
-          <md-filled-text-field
-            data-sal="zoom-in"
-            data-sal-repeat
-            v-model.trim="password"
-            type="password"
-            label="Password"
-            :disabled="store.isLoading"
-          >
-            <md-icon slot="leading-icon" v-html="icon('settings', true)" />
-          </md-filled-text-field>
-
-          <!-- Confirm Password -->
-          <md-filled-text-field
-            data-sal="zoom-in"
-            data-sal-repeat
-            v-model.trim="confirmPassword"
-            type="password"
-            label="Confirm Password"
-            :disabled="store.isLoading"
-          >
-            <md-icon slot="leading-icon" v-html="icon('settings', true)" />
-          </md-filled-text-field>
-  
           <!-- Course and Year level -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <md-filled-select data-sal="slide-right" data-sal-repeat v-model="course" label="Course" :disabled="store.isLoading">
@@ -85,6 +47,45 @@
                 {{ mapYearLevel(year) }}
               </md-select-option>
             </md-filled-select>
+          </div>
+      
+          <!-- Email -->
+          <md-filled-text-field
+            data-sal="zoom-in"
+            data-sal-repeat
+            v-model.trim="email"
+            type="email"
+            label="Email"
+            :disabled="store.isLoading"
+            supportingText="Make sure to use your valid email address."
+          >
+            <md-icon slot="leading-icon" v-html="icon('mail', true)" />
+          </md-filled-text-field>
+
+          <div class="flex gap-5">
+            <!-- Password -->
+            <md-filled-text-field
+              data-sal="zoom-in"
+              data-sal-repeat
+              v-model.trim="password"
+              type="password"
+              label="Password"
+              :disabled="store.isLoading"
+            >
+              <md-icon slot="leading-icon" v-html="icon('lock', true)" />
+            </md-filled-text-field>
+  
+            <!-- Confirm Password -->
+            <md-filled-text-field
+              data-sal="zoom-in"
+              data-sal-repeat
+              v-model.trim="confirmPassword"
+              type="password"
+              label="Confirm Password"
+              :disabled="store.isLoading"
+            >
+              <md-icon slot="leading-icon" v-html="icon('lock', true)" />
+            </md-filled-text-field>
           </div>
   
           <!-- Register -->
@@ -122,10 +123,8 @@ import { isEmail } from '~/utils/string';
 import { Endpoints, makeRequest } from '~/network/request';
 import { mapYearLevel } from '~/utils/page';
 import { useStore, useDialog } from '~/store';
-import { getStore, removeStore, setStore } from "~/utils/storage";
 import { icon } from '~/utils/icon';
 import sal from "sal.js";
-import dayjs from "dayjs";
 
 import "@material/web/textfield/filled-text-field";
 import "@material/web/button/text-button";
@@ -144,7 +143,6 @@ const confirmPassword = ref("");
 const course = ref();
 const yearLevel = ref();
 
-const tatakform = ref<TatakformModel>();
 const college = ref<CollegeModel>();
 const dialog = useDialog();
 const store = useStore();
@@ -196,9 +194,6 @@ function register() {
     return;
   }
 
-  
-
-
   let id = dialog.open({
     title: "Confirm Details",
     message: `
@@ -232,8 +227,7 @@ function register() {
           ok: {
             text: "I understand, proceed",
             click() {
-              // TODO: Register the user
-              makeRequest<RegisterRequest>("POST", Endpoints.TatakformsRegister, {
+              makeRequest("POST", Endpoints.TatakformsRegister, {
                 student_id: studentId.value,
                 year_level: yearLevel.value,
                 first_name: firstName.value,
