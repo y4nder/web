@@ -12,7 +12,7 @@
             <h4 class="headline-medium font-semibold text-center text-on-surface-variant">
               {{ store.user.first_name }} {{ store.user.last_name }}
             </h4>
-            <p class="text-outline text-center lg:text-start">{{ store.user.email_address }}</p>
+            <p class="text-outline text-center lg:text-start">{{ store.user.student_id }}</p>
           </div>
           <div class="lg:ml-12">
             <md-outlined-button class="mt-3 lg:mt-0">View Profile</md-outlined-button>
