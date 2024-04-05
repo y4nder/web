@@ -110,7 +110,7 @@ function generateQrCode() {
     title: `Your QR Code`,
     message: `
       <div class="">
-        <img style="height: 250px;" src="${Config.API_URL}/qrcode?q=CSPS${store.user.student_id}" />
+        <img style="height: 250px;" src="${Config.API_URL}/qrcode?q=CSPS${store.user.student_id}&theme=${store.isDark ? 'dark' : 'light'}" />
       </div>
     `,
     cancel: null,
