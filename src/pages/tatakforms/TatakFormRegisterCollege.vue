@@ -5,7 +5,7 @@
         <div class="flex flex-col space-y-5 w-full sm:w-3/4 lg:w-1/2 2xl:w-1/3 font-reset bg-surface-container p-6 lg:p-8 rounded-2xl">
           <div class="text-center mb-1" data-sal="slide-right" data-sal-repeat>
             <h4 class="mb-1 text-lg lg:text-2xl font-bold"><span class="text-primary">Tatakforms</span> Registration</h4>
-            <p class="text-outline">Once created, your account will be used for all Tatakforms events!</p>
+            <p class="text-outline">You are registering for {{ college?.name }}</p>
           </div>
   
           <!-- Student ID -->
@@ -18,30 +18,30 @@
             label="Student ID"
             min="0"
             oninput="this.value = this.value.slice(0, 8)"
-            :disabled="store.isLoading"
+            :disabled="store.isLoading || isRegistered"
           >
             <md-icon slot="leading-icon" v-html="icon('badge', true)" />
           </md-filled-text-field>
   
           <!-- First and Last name -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5 !mt-1">
-            <md-filled-text-field data-sal="slide-right" data-sal-repeat v-model.trim="firstName" label="First name" :disabled="store.isLoading">
+            <md-filled-text-field data-sal="slide-right" data-sal-repeat v-model.trim="firstName" label="First name" :disabled="store.isLoading || isRegistered">
               <md-icon slot="leading-icon" v-html="icon('person', true)" />
             </md-filled-text-field> 
-            <md-filled-text-field data-sal="slide-left" data-sal-repeat v-model.trim="lastName" label="Last name" :disabled="store.isLoading">
+            <md-filled-text-field data-sal="slide-left" data-sal-repeat v-model.trim="lastName" label="Last name" :disabled="store.isLoading || isRegistered">
               <md-icon slot="leading-icon" v-html="icon('person', true)" />
             </md-filled-text-field> 
           </div>
 
           <!-- Course and Year level -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <md-filled-select data-sal="slide-right" data-sal-repeat v-model="course" label="Course" :disabled="store.isLoading">
+            <md-filled-select data-sal="slide-right" data-sal-repeat v-model="course" label="Course" :disabled="store.isLoading || isRegistered">
               <md-icon slot="leading-icon" v-html="icon('school', true)" />
               <md-select-option v-for="course in college?.courses" :key="course.id" :value="course.id">
                 {{ course.acronym }}
               </md-select-option>
             </md-filled-select>
-            <md-filled-select data-sal="slide-left" data-sal-repeat v-model="yearLevel" label="Year level" :disabled="store.isLoading">
+            <md-filled-select data-sal="slide-left" data-sal-repeat v-model="yearLevel" label="Year level" :disabled="store.isLoading || isRegistered">
               <md-icon slot="leading-icon" v-html="icon('school', true)" />
               <md-select-option v-for="year in 4" :key="year" :value="year">
                 {{ mapYearLevel(year) }}
@@ -56,7 +56,7 @@
             v-model.trim="email"
             type="email"
             label="Email"
-            :disabled="store.isLoading"
+            :disabled="store.isLoading || isRegistered"
             supportingText="Make sure to use your valid email address."
           >
             <md-icon slot="leading-icon" v-html="icon('mail', true)" />
@@ -70,7 +70,7 @@
               v-model.trim="password"
               type="password"
               label="Password"
-              :disabled="store.isLoading"
+              :disabled="store.isLoading || isRegistered"
             >
               <md-icon slot="leading-icon" v-html="icon('lock', true)" />
             </md-filled-text-field>
@@ -82,11 +82,15 @@
               v-model.trim="confirmPassword"
               type="password"
               label="Confirm Password"
-              :disabled="store.isLoading"
+              :disabled="store.isLoading || isRegistered"
             >
               <md-icon slot="leading-icon" v-html="icon('lock', true)" />
             </md-filled-text-field>
           </div>
+
+          <p class="text-on-surface-variant text-xs">
+            Note: Once created, your account will be used for all Tatakforms events!
+          </p>
   
           <!-- Register -->
           <div class="flex justify-end gap-3" data-sal="zoom-in" data-sal-repeat>
@@ -161,6 +165,7 @@ watch([isFetchingCourses], ([fetchingCourses]) => {
 
 onMounted(() => {
   store.isLoading = false;
+
   makeRequest<CollegeModel, { acronym: string }>("GET", Endpoints.CollegeCourses, { acronym: route.params.college as string }, response => {
     isFetchingCourses.value = false;
 
@@ -219,51 +224,46 @@ function register() {
       click() {
         dialog.close(id);
 
-        id = dialog.open({
-          title: "Note",
-          message: `
-            <p>QR code will be given to your email and will be used during event.</p>
-          `,
-          ok: {
-            text: "I understand, proceed",
-            click() {
-              makeRequest("POST", Endpoints.TatakformsRegister, {
-                student_id: studentId.value,
-                year_level: yearLevel.value,
-                first_name: firstName.value,
-                last_name: lastName.value,
-                course_id: course.value,
-                email_address: email.value,
-                password: password.value
-              }, (response) => {
-                isLoggingIn.value = false;
-                store.isLoading = false;
-                console.log(response)
-                // if success
-                if (response.success) {
-                  // Save student tokens to local storage
-                  // setStore("usat", response.data.accessToken);
-                  // setStore("usrt", response.data.refreshToken);
+        makeRequest("POST", Endpoints.TatakformsRegister, {
+          student_id: studentId.value,
+          year_level: yearLevel.value,
+          first_name: firstName.value,
+          last_name: lastName.value,
+          course_id: course.value,
+          email_address: email.value,
+          password: password.value
+        }, (response) => {
+          isLoggingIn.value = false;
+          store.isLoading = false;
+          
+          // if success
+          if (response.success) {
+            isRegistered.value = true;
 
-                  // Set student
-                  // store.user = response.data.user;
-                  // store.role = AuthType.UNIV_ACCOUNT;
-                  // Set is logged in to true
-                  store.isLoggedIn = true;
-                  // Redirect to home page
-                  router.push({ name: "Tatak Forms Login" });
-                  return;
+            id = dialog.open({
+              title: "Success",
+              message: response.message,
+              cancel: {
+                text: "Close",
+                click: () => {
+                  clearFields();
+                  dialog.close(id);
                 }
+              },
+              ok: {
+                text: "Go to login",
+                click: () => {
+                  clearFields();
+                  dialog.close(id);
+                  router.push("/tatakforms/login");
+                }
+              }
+            });
 
-                toast.error(response.message);
-              });
-              dialog.close(id);
-            }
-          },
-          cancel: {
-            text: "Cancel",
-            click: () => dialog.close(id)
+            return;
           }
+
+          toast.error(response.message);
         });
       }
     }

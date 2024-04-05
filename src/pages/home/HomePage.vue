@@ -16,9 +16,14 @@
           </md-filter-chip>
         </div>
 
-        <div class="flex justify-center mt-3" data-sal="zoom-in">
+        <div class="flex justify-center gap-3 flex-col lg:flex-row items-center my-3" data-sal="zoom-in">
           <router-link to="/ictcongress2024">
-            <md-assist-chip class="mb-3" label="ICT Congress 2024 registration" elevated>
+            <md-assist-chip label="ICT Congress 2024 registration" elevated>
+              <md-icon slot="icon" v-html="icon('campaign', true)" />
+            </md-assist-chip>
+          </router-link>
+          <router-link to="/tatakforms">
+            <md-assist-chip label="UC DAYS 2024 Registration" elevated>
               <md-icon slot="icon" v-html="icon('campaign', true)" />
             </md-assist-chip>
           </router-link>
