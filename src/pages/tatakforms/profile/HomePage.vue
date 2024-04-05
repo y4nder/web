@@ -34,20 +34,18 @@
             <!-- Events -->
             <div v-if="selectedTab == 0">
 
-              <div class="grid grid-cols-2 mt-3">
-                <div v-for="ev in events" :key="ev.slug"
-                  class="flex justify-between items-center rounded-lg border border-outline-variant p-4 w-full">
-                  <div class="flex-grow flex items-center gap-5">
+              <div class="grid grid-cols-1 2xl:grid-cols-2 mt-3">
+                <div v-for="ev in events" :key="ev.slug" class="flex flex-col sm:flex-row gap-4 justify-between items-center rounded-lg border border-outline-variant p-4 w-full">
+                  <div class="flex-grow flex items-center gap-5 self-start">
                     <div>
                       <md-icon class="text-primary" v-html="icon('campaign')" />
                     </div>
                     <div>
                       <h4 class="font-semibold text-lg text-primary">{{ ev.name }}</h4>
-                      <p class="text-sm text-outline">{{ getHumanDate(new Date(ev.from_date)) }} to {{ getHumanDate(new
-              Date(ev.to_date)) }}</p>
+                      <p class="text-sm text-outline">{{ getHumanDate(new Date(ev.from_date)) }} to {{ getHumanDate(new Date(ev.to_date)) }}</p>
                     </div>
                   </div>
-                  <router-link :to="`/tatakforms/event/${ev.slug}`">
+                  <router-link :to="`/tatakforms/event/${ev.slug}`" class="self-end">
                     <md-outlined-button>
                       Select
                     </md-outlined-button>
