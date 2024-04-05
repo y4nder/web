@@ -1,46 +1,70 @@
 <template>
-  <div class="container px-7 flex flex-col gap-3">
-    <div class="mt-1 flex flex-col lg:justify-center lg:items-center">
-      <h4 class="headline-medium font-semibold text-primary">Hello, {{ store.user.first_name }} {{ store.user.last_name }}
-      </h4>
-      <div>
-        <md-filled-button class="">View Profile</md-filled-button>
-      </div>
-    </div>
+  <div class="container mx-auto px-7 flex flex-col justify-center items-center gap-3">
 
-    <div class="flex flex-col lg:grid lg:grid-cols-2 lg:mt-5">
+    <div class="flex justify-center w-full lg:w-2/3 xl:w-1/2">
+      <div class="flex flex-col justify-center items-center w-full">
+        <!-- Top -->
+        <div class="flex flex-col lg:flex-row lg:justify-center items-center lg:gap-5">
+          <div>
+            <md-icon class="profile-icon" v-html="icon('account_circle')" />
+          </div>
+          <div>
+            <h4 class="headline-medium font-semibold text-center text-on-surface-variant">
+              {{ store.user.first_name }} {{ store.user.last_name }}
+            </h4>
+            <p class="text-outline text-center lg:text-start">{{ store.user.email_address }}</p>
+          </div>
+          <div class="lg:ml-12">
+            <md-outlined-button class="mt-3 lg:mt-0">View Profile</md-outlined-button>
+          </div>
+        </div>
 
-      <div v-for="e in events" class="mt-3 lg:order-0 lg:ms-5">
-        <h5 class="title-medium font-bold text-primary">Event</h5>
-        <router-link :to="`/tatakforms/event/${e.slug}`">
-          <div class="event px-5 py-3 mt-3 -translate-y-1 w-full sm:w-2/3 md:w-2/5 lg:w-1/3 xl:w-min !overflow-visible">
-            <md-ripple />
-            <div class="content">
-              <div class="w-full">
-                <h5 class="label-large mb-2 text-error"></h5>
-                <h4 class="title-large font-bold text-outline">{{ e.name }}</h4>
-                <h3 class="flex items-center text-outline">
-                  <md-icon class="mr-2" v-html="icon('event')" />
-                  {{ getHumanDate(new Date(e.from_date)) }} to
-                  {{ getHumanDate(new Date(e.to_date)) }}
-                </h3>
+        <!-- Tabs -->
+        <md-tabs :activeTabIndex="selectedTab" class="mt-5">
+          <md-secondary-tab title="Events" @click="selectedTab = 0">
+            Events
+          </md-secondary-tab>
+          <md-secondary-tab title="History" @click="selectedTab = 1">
+            History
+          </md-secondary-tab>
+        </md-tabs>
+
+        <div class="w-full border-t border-outline-variant -translate-y-[1px]">
+          <Transition name="slide-fade" mode="out-in">
+            <!-- Events -->
+            <div v-if="selectedTab == 0">
+
+              <div class="grid grid-cols-2 mt-3">
+                <div v-for="ev in events" :key="ev.slug"
+                  class="flex justify-between items-center rounded-lg border border-outline-variant p-4 w-full">
+                  <div class="flex-grow flex items-center gap-5">
+                    <div>
+                      <md-icon class="text-primary" v-html="icon('campaign')" />
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-lg text-primary">{{ ev.name }}</h4>
+                      <p class="text-sm text-outline">{{ getHumanDate(new Date(ev.from_date)) }} to {{ getHumanDate(new
+              Date(ev.to_date)) }}</p>
+                    </div>
+                  </div>
+                  <router-link :to="`/tatakforms/event/${ev.slug}`">
+                    <md-outlined-button>
+                      Select
+                    </md-outlined-button>
+                  </router-link>
+                </div>
               </div>
             </div>
-          </div>
-        </router-link>
-      </div>
-
-      <div class="mt-5">
-        <h5 class="title-medium font-semibold text-primary mb-2">Recent Activity</h5>
-        <section>
-          <div>
-            <div v-for="history in attendanceHistory">
-              <p class="font-semibold">UC DAYS 2024 - ATTENDANCE</p>
-              <p class="text-outline text-xs lg:text-sm">{{ getReadableDate(history) }}</p>
-              <md-divider inset-end class="my-3"></md-divider>
+            <!-- History -->
+            <div v-else-if="selectedTab == 1">
+              <div v-for="history in attendanceHistory">
+                <p class="font-semibold">UC DAYS 2024 - ATTENDANCE</p>
+                <p class="text-outline text-xs lg:text-sm">{{ getReadableDate(history) }}</p>
+                <md-divider inset-end class="my-3"></md-divider>
+              </div>
             </div>
-          </div>
-        </section>
+          </Transition>
+        </div>
       </div>
     </div>
   </div>
@@ -58,23 +82,26 @@ import sal from "sal.js";
 import "@material/web/textfield/filled-text-field";
 import "@material/web/button/text-button";
 import "@material/web/button/filled-tonal-button";
+import "@material/web/button/outlined-button";
 import "@material/web/button/filled-button";
-import "@material/web/select/filled-select";
-import "@material/web/select/select-option";
 import "@material/web/icon/icon";
+import "@material/web/tabs/tabs";
 import "@material/web/ripple/ripple";
+import "@material/web/tabs/secondary-tab";
 
 const store = useStore();
 
+const selectedTab = ref(0);
 const errorMessage = ref("");
 const attendanceHistory = ref<any[]>([])
 const events = ref<TatakformModel[]>([])
-onMounted(() => {
-  makeRequest<any, null>("GET", Endpoints.TatakformsAttendanceHistory, null, response => {
 
+onMounted(() => {
+  makeRequest<any, null>("GET", Endpoints.TatakformsAttendanceHistoryOfEvent, null, response => {
     if (response.success) {
       if (response.data[1] > 0) {
-        const dataObj = response.data[0][0]
+        const dataObj = response.data[0][0];
+
         Object.keys(dataObj).forEach(key => {
           if (dataObj[key]) {
             const data = dataObj[key].toString().split(" ")
@@ -86,10 +113,12 @@ onMounted(() => {
       }
       return;
     }
+
     errorMessage.value = response.message;
     toast.error(response.message);
   });
 
+  // Get all tatakform events
   makeRequest<TatakformModel[], null>("GET", Endpoints.Tatakforms, null, response => {
     if (response.success) {
       console.log(response.data)
@@ -100,7 +129,6 @@ onMounted(() => {
     errorMessage.value = response.message;
     toast.error(response.message);
   });
-
 
   sal();
 });
@@ -119,6 +147,20 @@ onMounted(() => {
 
   .content {
     @apply font-medium rounded-2xl min-w-80;
+  }
+}
+
+.profile-icon {
+  --md-icon-size: 72px;
+  @apply text-on-surface-variant;
+}
+
+md-tabs {
+  --md-secondary-tab-container-color: transparent;
+  --md-secondary-tab-container-shape: 8px;
+
+  &::part(divider) {
+    @apply hidden;
   }
 }
 </style>
