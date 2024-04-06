@@ -168,6 +168,9 @@ import CancelOutlined from "@material-symbols/svg-700/rounded/cancel.svg?raw";
 import BarcodeScanner from "@material-symbols/svg-700/rounded/barcode_scanner-fill.svg?raw";
 import BarcodeScannerOutlined from "@material-symbols/svg-700/rounded/barcode_scanner.svg?raw";
 
+import KeyboardArrowRight from "@material-symbols/svg-700/rounded/keyboard_arrow_right-fill.svg?raw";
+import KeyboardArrowRightOutlined from "@material-symbols/svg-700/rounded/keyboard_arrow_right.svg?raw";
+
 // Icon type
 export type Icon = "arrow_back" | "menu" | "photo_camera" | "favorite" |
   "arrow_forward" | "verified" | "lock" | "visibility" | "visibility_off" | 
@@ -178,7 +181,7 @@ export type Icon = "arrow_back" | "menu" | "photo_camera" | "favorite" |
   "groups" | "chevron_right" | "filter_list" | "chevron_left" | "campaign" | "event" |
   "location_on" | "schedule" | "calendar_month" | "arrow_upward" | "arrow_downward" |
   "forum" | "commit" | "dark_mode" | "light_mode" | "bar_chart" | "location_city" | "cancel" |
-  "barcode_scanner";
+  "barcode_scanner" | "keyboard_arrow_right";
 
 /**
  * Material Icon
@@ -296,6 +299,8 @@ export function icon(name: Icon, outlined: boolean = false) {
   if (name === "cancel") return outlined ? CancelOutlined : Cancel;
   // Barcode Scanner
   if (name === "barcode_scanner") return outlined ? BarcodeScannerOutlined : BarcodeScanner;
+  // Keyboard Arrow Right
+  if (name === "keyboard_arrow_right") return outlined ? KeyboardArrowRightOutlined : KeyboardArrowRight;
   
   // Default
   return null;

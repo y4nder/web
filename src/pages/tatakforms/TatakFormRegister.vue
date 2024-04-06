@@ -7,8 +7,10 @@
           <span>Fetching {{ 'colleges' }}...</span>
         </div>
         <div v-else>
-          
-          <p class="text-center font-bold text-2xl text-primary">Select your college</p>
+          <p class="text-center text-2xl font-bold text-primary mb-1">
+            Tatakforms <span class="text-on-surface-variant">Registration</span>
+          </p>
+          <p class="text-center font-medium text-base text-outline mb-2">Step 1 – Select your college</p>
           <div class="grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-4 mt-6">
             <div
               v-for="college in colleges"

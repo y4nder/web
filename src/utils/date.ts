@@ -55,19 +55,12 @@ export function getMonthCategory(data: any[], date: string, i: number) {
  * @param date Date to check
  */
 export function getTime(date: Date | string) {
-  let hours = 0;
-  let minutes = 0;
-
   if (typeof date === 'string') {
-    const s = date.split(':');
-    hours = parseInt(s[0]);
-    minutes = parseInt(s[1]);
+    date = new Date(date);
   }
-  
-  if (date instanceof Date) {
-    hours = date.getHours();
-    minutes = date.getMinutes();
-  }
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
 
   const ampm = hours >= 12 ? 'PM' : 'AM';
   return `${hours === 0 ? 12 : (hours > 12 ? hours - 12 : hours)}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
@@ -137,6 +130,24 @@ export function isSameDate(date1: Date, date2: Date) {
   return date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
     date1.getDate() === date2.getDate();
+}
+
+/**
+ * Get dates between two dates
+ */
+export function getDatesBetween(date1: Date | string, date2: Date | string) {
+  if (typeof date1 === 'string') date1 = new Date(date1);
+  if (typeof date2 === 'string') date2 = new Date(date2);
+
+  const dates = [];
+  const current = new Date(date1);
+
+  while (current <= date2) {
+    dates.push(new Date(current));
+    current.setDate(current.getDate() + 1);
+  }
+
+  return dates;
 }
 
 /**

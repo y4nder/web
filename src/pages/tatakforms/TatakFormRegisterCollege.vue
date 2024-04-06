@@ -2,7 +2,7 @@
   <div class="container mx-auto px-6">
     <Transition name="slide-fade" mode="out-in">
       <div v-if="errorMessage.length === 0" class="flex flex-col items-center justify-center pb-5">
-        <div class="flex flex-col space-y-5 w-full sm:w-3/4 lg:w-1/2 2xl:w-1/3 font-reset bg-surface-container p-6 lg:p-8 rounded-2xl">
+        <div class="flex flex-col space-y-5 w-full sm:w-3/4 lg:w-7/12 2xl:w-1/3 font-reset bg-surface-container p-6 lg:p-8 rounded-2xl">
           <div class="text-center mb-1" data-sal="slide-right" data-sal-repeat>
             <h4 class="mb-1 text-lg lg:text-2xl font-bold"><span class="text-primary">Tatakforms</span> Registration</h4>
             <p class="text-outline">You are registering for {{ college?.name }}</p>
