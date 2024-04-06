@@ -143,7 +143,7 @@ function login() {
     
       // Set student
       store.user = response.data.user;
-      store.role = AuthType.UNIV_ACCOUNT;
+      store.role = AuthType.TATAKFORM_ACCOUNT;
       // Set is logged in to true
       store.isUnivStudentLoggedIn = true;
       // Redirect to home page

@@ -41,8 +41,8 @@ export function validateLogin(): Promise<boolean> {
           store.isUnivStudentLoggedIn = false;
         }
 
-        // If Univ Account
-        if (store.role === AuthType.UNIV_ACCOUNT) {
+        // If Tatakform Account
+        if (store.role === AuthType.TATAKFORM_ACCOUNT) {
           // Set admin data
           store.user = response.data;
           store.isUnivStudentLoggedIn = true;
