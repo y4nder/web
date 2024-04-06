@@ -128,8 +128,8 @@ function login() {
   }
 
   // Make request to server
-  makeRequest<LoginResponse, { username: string, password: string}>("POST", Endpoints.TatakformsLogin, {
-    username: id.value,
+  makeRequest<LoginResponse, { student_id: string, password: string}>("POST", Endpoints.TatakformsLogin, {
+    student_id: id.value,
     password: password.value
   }, (response) => {
     isLoggingIn.value = false;

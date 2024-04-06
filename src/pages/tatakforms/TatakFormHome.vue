@@ -73,7 +73,7 @@
 
             <div class="flex flex-col lg:flex-row justify-end gap-3 mt-5">
               <md-outlined-button @click="generateQrCode">View QR Code</md-outlined-button>
-              <md-filled-button disabled>Download Tatak Form</md-filled-button>
+              <md-filled-button @click="downloadTatakForm">Download Tatak Form</md-filled-button>
             </div>
           </div>
         </Transition>
@@ -140,6 +140,31 @@ function getAttendance(ev: TatakformModel) {
 
     attendance.value = response.data !== null ? response.data : {};
     console.log(attendance.value);
+  });
+}
+
+function downloadTatakForm() {
+  if (!selectedEvent.value) {
+    toast.error("Please select an event first");
+    return;
+  }
+
+  toast.info("Downloading your tatakform...");
+
+  makeRequest<any, { slug: string }>("GET", Endpoints.TatakformsAttendanceDownload, { slug: selectedEvent.value.slug }, async (response, config) => {
+    if (response instanceof Blob) {
+      if (response.size < 1000) {
+        toast.error("Error downloading tatakform. Please try again later.");
+        return;
+      }
+      
+      // Get the filename from the response headers
+      const filename = config?.headers['content-disposition'].split('filename=')[1].replaceAll('"', '') || "tatakform.pdf";
+      // Save the file
+      return saveAs(response, filename);
+    }
+
+    toast.error(response.message);
   });
 }
 

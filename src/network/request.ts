@@ -50,7 +50,11 @@ function makeRequest<T, U>(method: HttpMethod, endpoint: Endpoints, data: U, cal
     method, url,
   };
 
-  if ([Endpoints.ICTCongressExportSheet, Endpoints.ICTCongressExportCsv].includes(endpoint)) {
+  if ([Endpoints.ICTCongressExportSheet,
+       Endpoints.ICTCongressExportCsv,
+       Endpoints.TatakformsAttendanceDownload
+      ].includes(endpoint))
+  {
     config.responseType = "blob";
   }
 

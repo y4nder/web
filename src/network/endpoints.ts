@@ -46,6 +46,7 @@ enum Endpoints {
   TatakformsLogin = "/tatakforms/login",
 
   TatakformsAttendance = "/tatakforms/attendance/:slug",
+  TatakformsAttendanceDownload = "/tatakforms/attendance/:slug/download",
   TatakformsAttendanceHistoryOfEvent = "/tatakforms/attendance",
 
   ICTCongress = "/ictcongress2024",
