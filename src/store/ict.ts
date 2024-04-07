@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useIctStore = defineStore("ict", () => {
-  const isAcceptingRegistrations = true;
+  const isAcceptingRegistrations = false;
   const campuses: ICTCampus[] = [];
   const tshirtSizes: ICTShirtSize[] = [];
   const discountCodes: ICTDiscountCode[] = [];
