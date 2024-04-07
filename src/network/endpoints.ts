@@ -41,6 +41,7 @@ enum Endpoints {
   OrdersReference = "/orders/reference/:reference",
 
   Tatakforms = "/tatakforms",
+  TatakformsConfig = "/tatakforms/config",
   TatakformsSlug = "/tatakforms/:slug",
   TatakformsRegister = "/tatakforms/register",
   TatakformsLogin = "/tatakforms/login",

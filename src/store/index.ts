@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 export * from "./dialog";
 export * from "./ict";
+export * from "./tatakform";
 
 export const useStore = defineStore("global", () => {
   const errorMessage = "";

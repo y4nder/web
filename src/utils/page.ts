@@ -99,3 +99,25 @@ export function mapYear(year: number | string): string {
       return "Unknown";
   }
 }
+
+/**
+ * Get the college from the course ID
+ */
+export function getCollegeFromCourseID(colleges: CollegeModel[], courseID: number) {
+  return colleges.find((college) => college.courses?.some((course) => course.id === courseID));
+}
+
+/**
+ * Get the course from the course ID
+ */
+export function getCourseFromCourseID(colleges: CollegeModel[], courseID: number): CourseModel | null {
+  for (const college of colleges) {
+    const course = college.courses?.find((course) => course.id === courseID);
+
+    if (course) {
+      return course;
+    }
+  }
+
+  return null;
+}

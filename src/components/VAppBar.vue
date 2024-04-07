@@ -87,27 +87,26 @@
         </div>
 
         <div v-if="route.name?.toString().includes('Tatak')">
-
-        <div class="xl:flex justify-end space-x-2 hidden" v-if="route.name === 'Tatakforms Home' || route.name === 'Tatakforms Event'">
-          <md-tabs class="overflow-hidden" :activeTabIndex="route.name === 'Tatakforms Home' || route.name === 'Tatakforms Event' ? 0 : 1">
-            <md-primary-tab title="Home">
-              <router-link class="link" to="/tatakforms/home">
-                <md-icon v-html="icon('home')" />
-                <span>Home</span>
-              </router-link>
-            </md-primary-tab>
-            <md-primary-tab title="Profile">
-              <router-link class="link" to="">
-                <md-icon v-html="icon('person')" />
-                <span>Profile</span>
-              </router-link>
-            </md-primary-tab>
-          </md-tabs>
+          <div
+            class="xl:flex justify-end space-x-2 hidden"
+            v-if="/Tatakforms (Profile|Home)/g.test(route.name as string)"
+          >
+            <md-tabs class="overflow-hidden" :activeTabIndex="route.path === '/tatakforms/home' ? 0 : 1">
+              <md-primary-tab title="Home">
+                <router-link class="link" to="/tatakforms/home">
+                  <md-icon v-html="icon('home')" />
+                  <span>Home</span>
+                </router-link>
+              </md-primary-tab>
+              <md-primary-tab title="Profile">
+                <router-link class="link" to="/tatakforms/profile">
+                  <md-icon v-html="icon('person')" />
+                  <span>Profile</span>
+                </router-link>
+              </md-primary-tab>
+            </md-tabs>
+          </div>
         </div>
-        
-          
-        </div>
-            
 
         <md-switch @change="onThemeChange" :selected="store.isDark" icons>
           <md-icon slot="on-icon" class="scale-[0.65]" v-html="icon('dark_mode')" />
@@ -118,12 +117,8 @@
           <md-icon v-html="icon('logout')" />
         </md-icon-button>
 
-        <md-icon-button title="Logout" @click="logoutUniv" v-if="route.path.includes('/tatakforms') && !route.path.includes('login') && !route.path.includes('register')">
-            <md-icon v-html="icon('logout')" />
-        </md-icon-button>
-
         <!-- Drawer Button -->
-        <div class="flex justify-end xl:hidden relative" v-if="!route.name?.toString().includes('ICT') && !route.name?.toString().includes('Tatak')">
+        <div class="flex justify-end xl:hidden relative" v-if="!route.name?.toString().includes('ICT')">
           <md-icon-button id="appbar-menu" @click="isMenuOpen = !isMenuOpen">
             <md-icon v-html="icon('menu')" />
           </md-icon-button>
@@ -172,23 +167,19 @@
             y-offset="8"
             anchor-corner="end-end"
             menu-corner="start-end"
-            v-else
+            v-else-if="store.isTatakformStudentLoggedIn"
           >
-            <router-link
-            v-if="store.isTatakformStudentLoggedIn" to="/tatakforms/home" tabindex="-1"
-            >
+            <router-link to="/tatakforms/home" tabindex="-1">
               <md-menu-item>
                 <span slot="headline">Home</span>
               </md-menu-item>
             </router-link>
-            <router-link v-if="store.isTatakformStudentLoggedIn" to="/profile" tabindex="-1">
+            <router-link to="/tatakforms/profile" tabindex="-1">
               <md-menu-item>
                 <span slot="headline">Profile</span>
               </md-menu-item>
             </router-link>
           </md-menu>
-
-
         </div>
       </div>
     </div>
@@ -257,28 +248,6 @@ function logout() {
   });
 }
 
-function logoutUniv() {
-  const id = dialog.open({
-    title: "Logout confirmation",
-    message: "This will clear your session data. Are you sure you want to logout?",
-    ok: {
-      text: "Logout",
-      click() {
-        removeStore("usat");
-        removeStore("usrt");
-        dialog.close(id);
-        router.push({ path: "/tatakforms/login" });
-      }
-    },
-    cancel:{
-      text: "Cancel",
-      click() {
-        dialog.close(id);
-      }
-    }
-  });
-}
-
 function onThemeChange() {
   store.isDark = !store.isDark;
   setDarkMode(store.isDark);
@@ -318,6 +287,10 @@ md-tabs {
   &::part(divider) {
     @apply hidden;
   }
+}
+
+md-primary-tab {
+  @apply px-3;
 }
 
 .link {

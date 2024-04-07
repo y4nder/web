@@ -1,5 +1,5 @@
 import { Endpoints, makeRequest } from "~/network/request";
-import { useStore } from "~/store";
+import { useStore, useTatakform } from "~/store";
 import { Config } from "~/config";
 import { AuthType } from "~/types/enums";
 import { getStore } from "./storage";
@@ -44,8 +44,11 @@ export function validateLogin(): Promise<boolean> {
 
         // If Tatakform Account
         if (store.role === AuthType.TATAKFORM_ACCOUNT) {
+          // Get tatakform store
+          const tatakform = useTatakform();
+
           // Set admin data
-          store.user = response.data;
+          tatakform.student = response.data as TatakformStudent;
           store.isLoggedIn = false;
           store.isAdminLoggedIn = false;
           store.isTatakformStudentLoggedIn = true;

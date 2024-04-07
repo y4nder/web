@@ -341,6 +341,10 @@ declare global {
     to_date: string;
     date_stamp: string;
   }
+
+  type TatakformStudent = StudentModel & {
+    course_id: number;
+  };
   
   type ICTStatistics = {
     countAll: number;

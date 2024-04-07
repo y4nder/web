@@ -42,6 +42,12 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/tatakforms/profile",
+    name: "Tatakforms Profile",
+    component: () => import("../pages/tatakforms/TatakFormProfile.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/tatakforms/register",
     name: "Tatakforms Register",
     component: () => import("../pages/tatakforms/TatakFormRegister.vue"),

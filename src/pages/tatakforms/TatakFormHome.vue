@@ -28,7 +28,7 @@
       </div>
       <div class="flex-grow bg-surface-container-low p-6 rounded-2xl self-stretch">
         <Transition name="slide-fade" mode="out-in">
-          <p v-if="selectedEvent === null" class="italic">
+          <p v-if="selectedEvent === null" class="text-outline">
             Please select an event to view more details
           </p>
           <div class="flex flex-col justify-between h-full" v-else>
@@ -86,7 +86,7 @@
 import { onMounted, ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { Endpoints, makeRequest } from '~/network/request';
-import { useStore, useDialog } from '~/store';
+import { useStore, useDialog, useTatakform } from '~/store';
 import { icon } from '~/utils/icon';
 import { getHumanDate, getDatesBetween, getTime } from "~/utils/date";
 import { saveAs } from 'file-saver';
@@ -105,6 +105,7 @@ import "@material/web/tabs/secondary-tab";
 
 const store = useStore();
 const dialog = useDialog();
+const tatakform = useTatakform();
 
 const errorMessage = ref("");
 const events = ref<TatakformModel[]>([]);
@@ -169,7 +170,7 @@ function downloadTatakForm() {
 }
 
 function generateQrCode() {
-  const url = `${Config.API_URL}/qrcode?q=CSPS${selectedEvent.value?.slug.toUpperCase()}${store.user.student_id}`;
+  const url = `${Config.API_URL}/qrcode?q=CSPS${selectedEvent.value?.slug.toUpperCase()}${tatakform.student.student_id}`;
 
   const id = dialog.open({
     title: `Your QR Code`,
@@ -191,7 +192,7 @@ function generateQrCode() {
         fetch(`${url}&theme=adaptive`)
           .then(res => res.blob())
           .then(blob => {
-            saveAs(blob, `CSPS${selectedEvent.value?.slug.toUpperCase()}${store.user.student_id}.png`);
+            saveAs(blob, `CSPS${selectedEvent.value?.slug.toUpperCase()}${tatakform.student.student_id}.png`);
           })
           .catch(err => {
             console.log(err);
