@@ -32,28 +32,28 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/tatakforms",
-    name: "Tatak Forms Landing",
+    name: "Tatakforms Landing",
     component: () => import("../pages/tatakforms/TatakFormLandingPage.vue"),
   },
   {
     path: "/tatakforms/home",
-    name: "Tatak Forms Home",
+    name: "Tatakforms Home",
     component: () => import("../pages/tatakforms/TatakFormHome.vue"),
     meta: { requiresAuth: true },
   },
   {
     path: "/tatakforms/register",
-    name: "Tatak Forms Register",
+    name: "Tatakforms Register",
     component: () => import("../pages/tatakforms/TatakFormRegister.vue"),
   },
   {
     path: "/tatakforms/register/:college",
-    name: "Tatak Forms Registration",
+    name: "Tatakforms Registration",
     component: () => import("../pages/tatakforms/TatakFormRegisterCollege.vue"),
   },
   {
     path: "/tatakforms/login",
-    name: "Tatak Forms Login",
+    name: "Tatakforms Login",
     component: () => import("../pages/tatakforms/TatakFormLoginPage.vue"),
   },
   {
@@ -164,6 +164,7 @@ let isValidated = false;
 router.beforeEach(async (to, _from, next) => {
   // Set loading to true
   const store = useStore();
+  
   if (!store.isMaintenance) {
     store.isLoading = true;
   }
@@ -173,17 +174,23 @@ router.beforeEach(async (to, _from, next) => {
     isValidated = true;
 
     if (!(await validateLogin()) && to.meta.requiresAuth) {
-      if(to.name === "Tatak Forms Home"){
-        return next({ name: "Tatak Forms Login" });
-      }
-      return next();
+      return next({ name: "Home" });
     }
   }
 
   const isStudent = !!getStore("sat") && !!getStore("srt");
   const isAdmin = !!getStore("aat") && !!getStore("art");
   const isICTAdmin = !!getStore("iat") && !!getStore("irt");
-  const isUnivStudent = !!getStore("usat") && !!getStore("usrt");
+  const isTatakformStudent = !!getStore("usat") && !!getStore("usrt");
+
+  if (isTatakformStudent) {
+    if (to.name === "Tatakforms Login") {
+      return next({ name: "Tatakforms Home" });
+    }
+
+    return next();
+  }
+
   if (isICTAdmin) {
     if (to.name === "Login - ICT Congress 2024") {
       return next({ name: "Admin - ICT Congress 2024" });
@@ -203,14 +210,6 @@ router.beforeEach(async (to, _from, next) => {
   if (isStudent) {
     if (to.name === "Admin" || to.name === "Login") {
       return next({ name: "Home" });
-    }
-
-    return next();
-  }
-
-  if (isUnivStudent) {
-    if (to.name === "Tatak Forms Login") {
-      return next({ name: "Tatak Forms Home" });
     }
 
     return next();

@@ -88,8 +88,8 @@
 
         <div v-if="route.name?.toString().includes('Tatak')">
 
-        <div class="xl:flex justify-end space-x-2 hidden" v-if="route.name === 'Tatak Forms Home' || route.name === 'Tatak Forms Event'">
-          <md-tabs class="overflow-hidden" :activeTabIndex="route.name === 'Tatak Forms Home' || route.name === 'Tatak Forms Event' ? 0 : 1">
+        <div class="xl:flex justify-end space-x-2 hidden" v-if="route.name === 'Tatakforms Home' || route.name === 'Tatakforms Event'">
+          <md-tabs class="overflow-hidden" :activeTabIndex="route.name === 'Tatakforms Home' || route.name === 'Tatakforms Event' ? 0 : 1">
             <md-primary-tab title="Home">
               <router-link class="link" to="/tatakforms/home">
                 <md-icon v-html="icon('home')" />
@@ -175,13 +175,13 @@
             v-else
           >
             <router-link
-            v-if="store.isUnivStudentLoggedIn" to="/tatakforms/home" tabindex="-1"
+            v-if="store.isTatakformStudentLoggedIn" to="/tatakforms/home" tabindex="-1"
             >
               <md-menu-item>
                 <span slot="headline">Home</span>
               </md-menu-item>
             </router-link>
-            <router-link v-if="store.isUnivStudentLoggedIn" to="/profile" tabindex="-1">
+            <router-link v-if="store.isTatakformStudentLoggedIn" to="/profile" tabindex="-1">
               <md-menu-item>
                 <span slot="headline">Profile</span>
               </md-menu-item>

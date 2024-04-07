@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center w-full h-full">
       <div class="">
         <h2 class="text-2xl md:text-3xl font-semibold mb-1 text-on-surface-variant">
-          Welcome to <span class="text-primary">Tatak Forms!</span>
+          Welcome to <span class="text-primary">Tatakforms!</span>
         </h2>
         <h6 class="text-sm">
           To login, please enter your credentials.
@@ -145,9 +145,9 @@ function login() {
       store.user = response.data.user;
       store.role = AuthType.TATAKFORM_ACCOUNT;
       // Set is logged in to true
-      store.isUnivStudentLoggedIn = true;
+      store.isTatakformStudentLoggedIn = true;
       // Redirect to home page
-      router.push({ name: "Tatak Forms Home" });
+      router.push({ name: "Tatakforms Home" });
       return;
     }
 

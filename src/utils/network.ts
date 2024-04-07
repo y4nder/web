@@ -22,14 +22,15 @@ export function validateLogin(): Promise<boolean> {
         // Get store 
         const store = useStore();
         // Role
-        store.role = response.count; // 2 = ict_admin, 1 = admin, 0 = student
+        store.role = response.count; // 4 = Tatakform student, 3 = Tatakform admin, 2 = ict_admin, 1 = admin, 0 = student
+
         // If student
         if (store.role === AuthType.STUDENT) {
           // Set student data
           store.user = response.data;
           store.isLoggedIn = true;
           store.isAdminLoggedIn = false;
-          store.isUnivStudentLoggedIn = false;
+          store.isTatakformStudentLoggedIn = false;
         }
   
         // If admin
@@ -38,21 +39,23 @@ export function validateLogin(): Promise<boolean> {
           store.admin = response.data;
           store.isAdminLoggedIn = true;
           store.isLoggedIn = false;
-          store.isUnivStudentLoggedIn = false;
+          store.isTatakformStudentLoggedIn = false;
         }
 
         // If Tatakform Account
         if (store.role === AuthType.TATAKFORM_ACCOUNT) {
           // Set admin data
           store.user = response.data;
-          store.isUnivStudentLoggedIn = true;
           store.isLoggedIn = false;
           store.isAdminLoggedIn = false;
+          store.isTatakformStudentLoggedIn = true;
         }
 
-        
+        return resolve(response.success);
       }
-      resolve(response.success);
+
+      // If not logged in
+      resolve(false);
     });
   });
 }

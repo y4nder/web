@@ -112,7 +112,7 @@ function makeRequest<T, U>(method: HttpMethod, endpoint: Endpoints, data: U, cal
     refreshToken = getStore("art");
   }
 
-  // If using tatak forms toke
+  // If using Tatakforms toke
   else if(isUnivAccount){
     accessToken = getStore("usat");
     refreshToken = getStore("usrt");
