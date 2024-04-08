@@ -22,7 +22,7 @@
       <div class="flex flex-col min-h-screen justify-between">
         <VAppBar
           :class="{
-            'pl-0 md:pl-[80px]':
+            'pl-0 md:pl-[80px] bg-green-600':
               route.path.startsWith('/admin') && !route.path.endsWith('/login'),
           }"
           transparent
@@ -35,7 +35,7 @@
         </router-view>
         <VFooter
           :class="{
-            'flex-grow':
+            'flex-grow ':
               route.name === 'Admin' ||
               (store.isLoggedIn && route.name === 'My Orders'),
           }"
