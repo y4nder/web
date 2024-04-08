@@ -34,7 +34,7 @@
           Theme: Championing Divergence Through Fortifying Unity & Camaraderie
         </h1>
         <p
-          class="lg:w-[45%] md:w-[80%] sm:w-[80%] custom-sm:w-[90%] lg:text-md md:text-lg sm:text-md custom-sm:text-sm font-medium text-center custom-sm:tracking-wider sm:tracking-widest md:tracking-widest lg:tracking-wider"
+          class="lg:w-[45%] md:w-[80%] sm:w-[80%] custom-sm:w-[90%] lg:text-md md:text-lg sm:text-md custom-sm:text-sm font-normal text-center custom-sm:tracking-wider sm:tracking-widest md:tracking-widest lg:tracking-wider"
         >
           University of Cebu Days is an annual celebration of our academic
           excellence by fostering a spirit of innovation and strengthening our
@@ -43,15 +43,19 @@
         </p>
 
         <p
-          class="lg:text-md font-medium lg:tracking-widest md:tracking-widest sm:tracking-wider custom-sm:tracking-wider text-center md:text-lg custom-sm:text-sm sm:text-md custom-sm:w-[80%]"
+          class="lg:text-md font-normal lg:tracking-widest md:tracking-widest sm:tracking-wider custom-sm:tracking-wider text-center md:text-lg custom-sm:text-sm sm:text-md custom-sm:w-[80%]"
         >
           This website is developed and managed by
           <span class="font-bold">CSPS Organization</span>
         </p>
       </div>
-      <div class="flex items-center justify-center gap-2 mt-10">
+      <div class="flex items-center justify-center gap-5 mt-10">
         <router-link to="/tatakforms/register">
           <md-filled-button>Register</md-filled-button>
+        </router-link>
+
+        <router-link to="/tatakforms/login">
+          <md-filled-button class="px-8">Login</md-filled-button>
         </router-link>
       </div>
     </div>
