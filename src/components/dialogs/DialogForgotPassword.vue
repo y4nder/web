@@ -14,16 +14,18 @@
         label="Student ID"
         v-model.trim="studentID"
         type="number"
-        :disabled="isLoading"
+        :disabled="isLoading || isTatakform"
         @keydown.enter="submit"
         required
       >
         <md-icon slot="leading-icon" v-html="icon('badge', true)" />
       </md-filled-text-field>
+
+      <p v-if="isTatakform" class="mt-3 text-error">We're sorry, we're still working on this feature. :((</p>
     </div>
     <div class="space-x-1" slot="actions">
       <md-text-button @click="close" :disabled="isLoading">Cancel</md-text-button>
-      <md-text-button @click="submit" :disabled="isLoading" autofocus>
+      <md-text-button @click="submit" :disabled="isLoading || isTatakform" autofocus>
         {{ isLoading ? "Sending..." : "Send" }}
       </md-text-button>
     </div>
@@ -45,6 +47,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isTatakform: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const studentID = ref();

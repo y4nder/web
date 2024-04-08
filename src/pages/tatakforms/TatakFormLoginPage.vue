@@ -65,7 +65,7 @@
     </div>
 
     <!-- Forgot Password dialog -->
-    <DialogForgotPassword v-model="isForgotDialogOpen" />
+    <DialogForgotPassword v-model="isForgotDialogOpen" :is-tatakform="true" />
   </div>
 </template>
 
