@@ -1,103 +1,126 @@
 <template>
-  <div
-    class="bg-surface-variant dark:bg-surface-container-high flex-grow h-screen w-full -z-[0]"
-  >
-    <img
-      class="object-cover relative h-full w-full opacity-30"
-      src="../../assets/img/tatakpics/POSTER-BG.png"
-      alt="dawd"
-    />
-    <div
-      class="absolute items-center justify-center flex sm:top-[15%] custom-sm:top-[10%] md:top-[20%] lg:top-[14%] custom-sm:my-[10%] flex-col"
-    >
-      <div
-        class="flex justify-center items-center graphic"
-        data-sal="zoom-in"
-        data-sal-repeat
-      >
-        <div class="flex justify-center rounded-3xl graphic">
-          <div class="absolute gradient rounded-3xl" />
-          <img
-            :src="graphic"
-            class="lg:w-[30%] lg:h-[15%] md:w-[70%] md:h-[15%] sm:w-[75%] sm:h-[18%] custom-sm:w-[75%] custom-sm:h-[18%] select-none float-anim"
-            alt="ICT Congress Graphics"
-          />
+  <div class="flex-grow w-full">
+    <div class="poster" />
+
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col justify-center items-center mt-24">
+        <div class="flex justify-center" data-sal="zoom-in">
+          <img :src="logo" class="w-full sm:w-4/5 md:w max-w-[400px] select-none float-anim px-6 logo" alt="UC Days 2024 Logo"  />
         </div>
-      </div>
-
-      <div
-        class="flex flex-col lg:gap-10 md:gap-10 sm:gap-10 custom-sm:gap-8 items-center justify-center tracking-wider"
-      >
-        <h1
-          class="font-semibold lg:text-2xl md:text-2xl sm:text-lg custom-sm:text-base text-center sm:w-[90%] lg:w-[90%] md:w-[90%] custom-sm:w-[90%]"
-        >
-          Theme:
-          <span class="text-primary">
-            Championing Divergence Through Fortifying Unity & Camaraderie</span
-          >
+  
+        <h1 class="text-lg md:text-xl font-bold mt-6 text-primary text-center" data-sal="zoom-in">
+          <span class="text-on-surface-variant">Theme: </span>
+          <span ref="theme"></span>
         </h1>
-        <p
-          class="lg:w-[45%] md:w-[80%] custom-sm:text-justify sm:w-[80%] custom-sm:w-[90%] lg:text-md md:text-lg sm:text-md custom-sm:text-sm font-normal text-center custom-sm:tracking-wide sm:tracking-widest md:tracking-widest lg:tracking-wider"
-        >
-          University of Cebu Days is an annual celebration of our academic
-          excellence by fostering a spirit of innovation and strengthening our
-          sense of unity and camaraderie - this time around, we unite together
-          with all the UC campuses!
-        </p>
+        
+        <div class="bg-neutral-100/50 dark:bg-neutral-900/90 backdrop-blur-sm p-6 rounded-xl mt-5 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/3" data-sal="zoom-in">
+          <p class="text-center" ref="intro"></p>
+        </div>
 
-        <p
-          class="lg:text-md font-normal lg:tracking-widest md:tracking-widest sm:tracking-wider custom-sm:tracking-wide text-center md:text-lg custom-sm:text-sm sm:text-md custom-sm:w-[80%]"
-        >
+        <p class="mt-5 flex flex-col md:flex-row items-center" data-sal="zoom-in">
           This website is developed and managed by
-          <span class="font-semibold">
-            <router-link to="/about"> CSPS Organization </router-link>
-          </span>
+          <router-link to="/about">
+            <md-text-button>
+              UC Main CSP-S Organization
+            </md-text-button>
+          </router-link>
         </p>
-      </div>
-      <div class="flex items-center justify-center gap-5 mt-10">
-        <router-link to="/tatakforms/register">
-          <md-filled-button
-            ><md-icon slot="icon" v-html="icon('campaign', true)" />
-            Register</md-filled-button
-          >
-        </router-link>
 
-        <router-link to="/tatakforms/login">
-          <md-filled-button class="px-7">
-            <md-icon slot="icon" v-html="icon('login', true)" />
-            Login</md-filled-button
-          >
-        </router-link>
+        <div class="flex items-center justify-center gap-4 mt-5">
+          <router-link to="/tatakforms/login" data-sal="slide-left">
+            <md-outlined-button class="px-7">
+              <md-icon slot="icon" v-html="icon('login', true)" />
+              Login
+            </md-outlined-button>
+          </router-link>
+
+          <router-link to="/tatakforms/register" data-sal="slide-right">
+            <md-filled-button>
+              <md-icon slot="icon" v-html="icon('campaign', true)" />
+              Register
+            </md-filled-button>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import "@material/web/button/text-button";
 import "@material/web/button/filled-button";
-import graphic from "../../assets/img/tatakpics/UC-DAYS LOGO V2.png";
-import VanillaTilt from "vanilla-tilt";
-import { icon } from "~/utils/icon";
+import "@material/web/button/outlined-button";
 import "@material/web/icon/icon";
-import { onMounted } from "vue";
+
+import { icon } from "~/utils/icon";
+import { ref, onMounted } from "vue";
+
+import logo from "~/assets/img/tatakform/ucdays-logo.png";
+import VanillaTilt from "vanilla-tilt";
+import Typed from "typed.js";
 import sal from "sal.js";
+
+const intro = ref();
+const theme = ref();
+const message = `
+  University of Cebu Days is an annual celebration of our academic
+  excellence by fostering a spirit of innovation and strengthening our
+  sense of unity and camaraderie - this time around, we unite together
+  with all the UC campuses!
+`;
+
+let instance: Typed | undefined;
 
 onMounted(() => {
   // Bind fancybox
   setTimeout(() => {
     // Bind tilting effect
-    for (const image of document.querySelectorAll(".graphic")) {
+    for (const image of document.querySelectorAll(".logo")) {
       VanillaTilt.init(image as HTMLElement, {
         reverse: true,
         reset: true,
+        "full-page-listening": true,
         perspective: 500,
       });
     }
 
     // Start sal.js animation
     sal();
+    startTyped();
   }, 0);
 });
+
+function startTyped() {
+  if (instance) {
+    instance.destroy();
+  }
+
+  instance = new Typed(theme.value, {
+    strings: [ "Championing Divergence Through Fortifying Unity & Camaraderie" ],
+    typeSpeed: 20,
+    showCursor: false,
+    onComplete() {
+      new Typed(intro.value, {
+        strings: [ message ],
+        typeSpeed: 20,
+        startDelay: 500,
+        showCursor: false,
+      });
+    }
+  });
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.poster {
+  @apply object-cover h-screen w-full select-none opacity-30 dark:opacity-10 absolute -z-[1];
+  background-image: url("~/assets/img/tatakform/ucdays-poster.png");
+  background-size: cover;
+  -webkit-user-drag: none;
+  box-shadow: inset 0 0 70px 50px var(--md-sys-color-surface-container-high);
+}
+
+html.dark .poster {
+  box-shadow: inset 0 0 100px 80px var(--md-sys-color-surface);
+}
+</style>

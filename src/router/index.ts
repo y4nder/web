@@ -32,7 +32,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/tatakforms",
-    name: "Tatakforms Landing",
+    name: "Tatakforms",
     component: () => import("../pages/tatakforms/TatakFormLandingPage.vue"),
   },
   {
