@@ -29,12 +29,15 @@
         class="flex flex-col lg:gap-10 md:gap-10 sm:gap-10 custom-sm:gap-8 items-center justify-center tracking-wider"
       >
         <h1
-          class="font-semibold lg:text-2xl md:text-2xl sm:text-lg custom-sm:text-lg text-center sm:w-[90%] lg:w-[90%] md:w-[90%] custom-sm:w-[90%]"
+          class="font-semibold lg:text-2xl md:text-2xl sm:text-lg custom-sm:text-base text-center sm:w-[90%] lg:w-[90%] md:w-[90%] custom-sm:w-[90%]"
         >
-          Theme: Championing Divergence Through Fortifying Unity & Camaraderie
+          Theme:
+          <span class="text-primary">
+            Championing Divergence Through Fortifying Unity & Camaraderie</span
+          >
         </h1>
         <p
-          class="lg:w-[45%] md:w-[80%] sm:w-[80%] custom-sm:w-[90%] lg:text-md md:text-lg sm:text-md custom-sm:text-sm font-normal text-center custom-sm:tracking-wider sm:tracking-widest md:tracking-widest lg:tracking-wider"
+          class="lg:w-[45%] md:w-[80%] custom-sm:text-justify sm:w-[80%] custom-sm:w-[90%] lg:text-md md:text-lg sm:text-md custom-sm:text-sm font-normal text-center custom-sm:tracking-wide sm:tracking-widest md:tracking-widest lg:tracking-wider"
         >
           University of Cebu Days is an annual celebration of our academic
           excellence by fostering a spirit of innovation and strengthening our
@@ -43,19 +46,27 @@
         </p>
 
         <p
-          class="lg:text-md font-normal lg:tracking-widest md:tracking-widest sm:tracking-wider custom-sm:tracking-wider text-center md:text-lg custom-sm:text-sm sm:text-md custom-sm:w-[80%]"
+          class="lg:text-md font-normal lg:tracking-widest md:tracking-widest sm:tracking-wider custom-sm:tracking-wide text-center md:text-lg custom-sm:text-sm sm:text-md custom-sm:w-[80%]"
         >
           This website is developed and managed by
-          <span class="font-bold">CSPS Organization</span>
+          <span class="font-semibold">
+            <router-link to="/about"> CSPS Organization </router-link>
+          </span>
         </p>
       </div>
       <div class="flex items-center justify-center gap-5 mt-10">
         <router-link to="/tatakforms/register">
-          <md-filled-button>Register</md-filled-button>
+          <md-filled-button
+            ><md-icon slot="icon" v-html="icon('campaign', true)" />
+            Register</md-filled-button
+          >
         </router-link>
 
         <router-link to="/tatakforms/login">
-          <md-filled-button class="px-8">Login</md-filled-button>
+          <md-filled-button class="px-7">
+            <md-icon slot="icon" v-html="icon('login', true)" />
+            Login</md-filled-button
+          >
         </router-link>
       </div>
     </div>
@@ -66,6 +77,8 @@
 import "@material/web/button/filled-button";
 import graphic from "../../assets/img/tatakpics/UC-DAYS LOGO V2.png";
 import VanillaTilt from "vanilla-tilt";
+import { icon } from "~/utils/icon";
+import "@material/web/icon/icon";
 import { onMounted } from "vue";
 import sal from "sal.js";
 
