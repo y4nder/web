@@ -18,12 +18,12 @@
 
         <div class="flex justify-center gap-3 flex-col lg:flex-row items-center my-3" data-sal="zoom-in">
           <router-link to="/ictcongress2024">
-            <md-assist-chip label="ICT Congress 2024 registration" elevated>
+            <md-assist-chip label="ICT Congress 2024 Registration" elevated>
               <md-icon slot="icon" v-html="icon('campaign', true)" />
             </md-assist-chip>
           </router-link>
           <router-link to="/tatakforms">
-            <md-assist-chip label="UC DAYS 2024 Registration" elevated>
+            <md-assist-chip label="UC Days 2024 Registration" elevated>
               <md-icon slot="icon" v-html="icon('campaign', true)" />
             </md-assist-chip>
           </router-link>
@@ -38,15 +38,14 @@
         </h5>
 
         <div class="flex justify-center space-x-3" :class="{ 'mt-5': store.isLoggedIn }">
-          <v-button :to="store.isLoggedIn ? '/bulletin' : '/login'" color="primary" variant="filled" data-sal="slide-left">
-            {{ store.isLoggedIn ? 'Bulletin Board' : 'Login' }}
+          <v-button :to="store.isLoggedIn ? '/bulletin' : '/tatakforms/login'" color="primary" variant="filled" data-sal="slide-left" :leading-icon="icon('login') || ''">
+            {{ store.isLoggedIn ? 'Bulletin Board' : 'Tatakforms Login' }}
           </v-button>
-          <v-button :to="store.isLoggedIn ? '/merch' : '/about'" color="primary" :trailing-icon="icon('arrow_forward') || ''" data-sal="slide-right">
+          <v-button :to="store.isLoggedIn ? '/merch' : '/about'" color="primary" :leading-icon="icon('commit') || ''" data-sal="slide-right">
             {{ store.isLoggedIn ? 'Go to merch' : 'About Us' }}
           </v-button>
         </div>
       </div>
-      
 
       <div class="w-full overflow-hidden mt-10 relative top-1">
         <canvas ref="waveEl"></canvas>
@@ -57,7 +56,7 @@
     <Transition name="slide-fade" mode="out-in">
       <div v-if="role && role !== '-' as Role" class="h-full bg-surface-variant dark:bg-surface-container-high px-6 mt-16 mb-16">
         <swiper-container
-          id="swiper"
+          ref="swiperEl"
           effect="cards"
           keyboard-enabled="true"
           round-lengths="true"
@@ -135,6 +134,7 @@ import "@material/web/chips/filter-chip";
 register();
 
 const waveEl = ref();
+const swiperEl = ref();
 const role = ref<Role | null>(getStore("home_msg_role") as Role || null);
 const isShowMessage = ref(false);
 const announcements = ref<AnnouncementModel[]>([]);
@@ -214,8 +214,8 @@ onMounted(() => {
  * Get swiper
  */
 function getSwiper(returnEl = false): Swiper | null {
-  const el = document.getElementById("swiper") as any;
-  if (el === null) return null;
+  const el = swiperEl.value;
+  if (!el) return null;
   return returnEl ? el : el.swiper;
 }
 
@@ -230,6 +230,7 @@ function showMessage(r: Role) {
   setTimeout(() => {
     // Get swiper
     const swiper = getSwiper();
+    bindSwiper();
 
     if (role.value === "dean") {
       swiper?.slideTo(0);
@@ -255,7 +256,7 @@ function bindSwiper() {
   if (swiper === null) return;
 
   // Add slide change event listener to swiper
-  swiper.on('slideChange', (swiper: Swiper) => {
+  swiper.on('activeIndexChange', (swiper: Swiper) => {
     if (swiper.activeIndex === 0) {
       role.value = "dean";
       setStore("home_msg_role", "dean");

@@ -49,12 +49,20 @@
           </md-text-button>
         </div>
 
-        <div class="flex justify-end">
-          <md-filled-button @click="login" class="w-1/3" :disabled="isLoggingIn">
+        <div class="flex flex-col gap-5">
+          <md-filled-button @click="login" class="w-full" :disabled="isLoggingIn">
             {{ isLoggingIn ? 'Logging in...' : 'Login' }}
           </md-filled-button>
-        </div>
 
+          <div class="flex justify-center items-center">
+            Looking for Tatakforms login? 
+            <router-link to="/tatakforms/login">
+              <md-text-button>
+                Click here
+              </md-text-button>
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
 
