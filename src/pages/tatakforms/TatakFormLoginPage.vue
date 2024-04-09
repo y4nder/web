@@ -16,6 +16,7 @@
             type="text"
             maxLength="8"
             hasLeadingIcon="true"
+            inputmode="numeric"
             @keydown.enter="login"
             v-model.trim="id"
             required

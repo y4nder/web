@@ -13,8 +13,9 @@
             data-sal="zoom-in"
             data-sal-repeat
             v-model.trim="studentId"
+            type="text"
             maxLength="8"
-            type="number"
+            inputmode="numeric"
             label="Student ID"
             min="0"
             oninput="this.value = this.value.slice(0, 8)"

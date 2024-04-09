@@ -63,6 +63,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../pages/tatakforms/TatakFormLoginPage.vue"),
   },
   {
+    path: "/tatakforms/reset/:token",
+    name: "Tatakforms Reset password",
+    component: () => import("../pages/tatakforms/TatakFormReset.vue"),
+  },
+  {
     path: "/",
     name: "Home",
     component: () => import("../pages/home/HomePage.vue"),

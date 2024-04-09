@@ -13,19 +13,19 @@
         class="w-full"
         label="Student ID"
         v-model.trim="studentID"
-        type="number"
-        :disabled="isLoading || isTatakform"
+        type="text"
+        maxLength="8"
+        inputmode="numeric"
+        :disabled="isLoading"
         @keydown.enter="submit"
         required
       >
         <md-icon slot="leading-icon" v-html="icon('badge', true)" />
       </md-filled-text-field>
-
-      <p v-if="isTatakform" class="mt-3 text-error">We're sorry, we're still working on this feature. :((</p>
     </div>
     <div class="space-x-1" slot="actions">
       <md-text-button @click="close" :disabled="isLoading">Cancel</md-text-button>
-      <md-text-button @click="submit" :disabled="isLoading || isTatakform" autofocus>
+      <md-text-button @click="submit" :disabled="isLoading" autofocus>
         {{ isLoading ? "Sending..." : "Send" }}
       </md-text-button>
     </div>
@@ -80,7 +80,7 @@ function submit() {
   }
 
   // Send the request
-  makeRequest("POST", Endpoints.ForgotPassword, { 
+  makeRequest("POST", props.isTatakform ? Endpoints.TatakformsStudentForgot : Endpoints.ForgotPassword, { 
     student_id: studentID.value
   }, response => {
     // Set loading to false
