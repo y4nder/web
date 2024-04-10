@@ -124,7 +124,7 @@ function login() {
   store.isLoading = true;
 
   type LoginResponse = {
-    user: TatakformStudent;
+    data: TatakformStudent;
     accessToken: string;
     refreshToken: string;
   }
@@ -144,7 +144,7 @@ function login() {
       setStore("usrt", response.data.refreshToken);
     
       // Set student
-      tatakform.student = response.data.user;
+      tatakform.student = response.data.data;
       // Set student role
       store.role = AuthType.TATAKFORM_ACCOUNT;
       // Set is logged in to true
