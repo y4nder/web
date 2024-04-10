@@ -82,7 +82,7 @@ import "@material/web/divider/divider";
 import { ref } from "vue";
 import { icon } from "~/utils/icon";
 import { toast } from "vue3-toastify";
-import { useStore } from "~/store";
+import { useStore, useTatakform } from "~/store";
 import { useRouter } from "vue-router";
 import { Endpoints, makeRequest } from "~/network/request";
 import { getStore, setStore } from "~/utils/storage";
@@ -92,6 +92,7 @@ import DialogForgotPassword from "~/components/dialogs/DialogForgotPassword.vue"
 
 const store = useStore();
 const router = useRouter();
+const tatakform = useTatakform();
 
 const id = ref(getStore("login_student_id"));
 const password = ref("");
@@ -123,7 +124,7 @@ function login() {
   store.isLoading = true;
 
   type LoginResponse = {
-    user: StudentModel;
+    user: TatakformStudent;
     accessToken: string;
     refreshToken: string;
   }
@@ -143,7 +144,8 @@ function login() {
       setStore("usrt", response.data.refreshToken);
     
       // Set student
-      store.user = response.data.user;
+      tatakform.student = response.data.user;
+      // Set student role
       store.role = AuthType.TATAKFORM_ACCOUNT;
       // Set is logged in to true
       store.isTatakformStudentLoggedIn = true;
