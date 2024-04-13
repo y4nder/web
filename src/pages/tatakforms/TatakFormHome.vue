@@ -54,7 +54,7 @@
                   <div class="flex items-center gap-2">
                     <span v-if="attendance[`day${i + 1}_am`]">{{ getTime(attendance[`day${i + 1}_am`]) }}</span>
                     <span class="text-outline text-xs" v-else>No record</span>
-                    <md-icon v-if="attendance[`day${i + 1}_am`]" v-html="icon('verified')" />
+                    <md-icon class="ml-2" v-if="attendance[`day${i + 1}_am`]" v-html="icon('verified')" />
                   </div>
                 </div>
                 <div class="attendance-container">
@@ -65,7 +65,7 @@
                   <div>
                     <span v-if="attendance[`day${i + 1}_pm`]">{{ getTime(attendance[`day${i + 1}_pm`]) }}</span>
                     <span class="text-outline text-xs" v-else>No record</span>
-                    <md-icon v-if="attendance[`day${i + 1}_pm`]" v-html="icon('verified')" />
+                    <md-icon class="ml-2" v-if="attendance[`day${i + 1}_pm`]" v-html="icon('verified')" />
                   </div>
                 </div>
               </div>
