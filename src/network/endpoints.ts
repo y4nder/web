@@ -9,7 +9,7 @@ enum Endpoints {
   CollegeCourses = "/colleges/:acronym",
   
   PhotosHash = "/photos/:hash",
-  ReferenceHash = "/photos/:hash/reference",
+  GCashHash = "/photos/:hash/gcash",
 
   StudentsPassword = "/students/password",
   StudentsKey = "/students/:key",

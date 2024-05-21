@@ -133,7 +133,9 @@
 
               <!-- Disabled for now -->
               <md-filter-chip
-                disabled
+                :disabled="isPlacingOrder"
+                :selected="mop === ModeOfPayment.GCASH"
+                @click.prevent="mop = ModeOfPayment.GCASH"
                 label="GCash"
               />
             </div>

@@ -8,8 +8,8 @@
     <div v-else class="flex flex-col justify-center items-center w-full lg:w-3/4 xl:w-1/2">
       <div class="flex gap-5 flex-col md:flex-row justify-between w-full mb-3">
         <div>
-          <h2 class="font-semibold title-large mb-3 bg-secondary text-on-secondary rounded-md px-2 w-full text-left">
-            {{ route.params.reference || order?.reference }}
+          <h2 class="font-semibold title-large rounded-md w-full text-left">
+            # {{ route.params.reference || order?.reference }}
           </h2>
           <h5 class="title-small w-full text-left">{{ order?.date_stamp ? getReadableDate(order?.date_stamp) : 'Invalid date' }}</h5>
         </div>

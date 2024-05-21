@@ -69,7 +69,7 @@ export function validateLogin(): Promise<boolean> {
  * @param isReference If the photo is a reference
  */
 export function getPhotoLink(hash: any, isReference = false) {
-  return Config.API_URL + Endpoints[isReference ? 'ReferenceHash' : "PhotosHash"].replace(":hash", hash);
+  return Config.API_URL + Endpoints[isReference ? 'GCashHash' : "PhotosHash"].replace(":hash", hash);
 }
 
 /**
