@@ -56,8 +56,12 @@ export function getMonthCategory(data: any[], date: string, i: number) {
  */
 export function getTime(date: Date | string) {
   if (typeof date === 'string') {
-    date = new Date(date);
+    const d = new Date();
+    const [year, month, day] = [ d.getFullYear(), d.getMonth() + 1, d.getDate() ];
+
+    date = new Date(`${year}-${month}-${day} ${date}`);
   }
+
 
   const hours = date.getHours();
   const minutes = date.getMinutes();

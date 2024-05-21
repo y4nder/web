@@ -188,6 +188,7 @@ function fetchEvents(search = "") {
 
     if (response.success) {
       data.value = response.data.map(event => {
+        console.log(event.start_time, event.end_time);
         const eventDate = new Date(event.date);
 
         attributes.value.push({
@@ -215,7 +216,7 @@ function fetchEvents(search = "") {
           title: event.title,
           content: event.description,
           date: getHumanDate(new Date(event.date)),
-          time: getTime(event.start_time.substring(0, 5)) + " - " + getTime(event.end_time.substring(0, 5)),
+          time: getTime(event.start_time) + " - " + getTime(event.end_time),
           location: event.venue,
           photos_hash: event.photos_hash,
         };
