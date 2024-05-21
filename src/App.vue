@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen">
     <md-linear-progress
-      class="fixed right-0 left-0 top-0 min-w-full z-[1]"
+      class="fixed right-0 left-0 top-0 min-w-full z-[5]"
       :indeterminate="store.isLoading"
     />
 
@@ -13,7 +13,7 @@
           'translate-x-0':
             route.path.startsWith('/admin') && !route.path.endsWith('/login'),
         }"
-        class="fixed top-0 bottom-0 -translate-x-[80px]"
+        class="fixed top-0 bottom-0 -translate-x-[80px] z-[2]"
         :selected="(route.params.tab as string | undefined) || 'dashboard'"
         :destinations="store.rails"
         @select="(id) => (store.selectedRail = id)"
@@ -22,7 +22,7 @@
       <div class="flex flex-col min-h-screen justify-between">
         <VAppBar
           :class="{
-            'pl-0 md:pl-[80px] bg-green-600':
+            'pl-0 md:pl-[80px]':
               route.path.startsWith('/admin') && !route.path.endsWith('/login'),
           }"
           transparent
