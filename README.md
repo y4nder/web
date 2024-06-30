@@ -18,7 +18,7 @@ We welcome contributions from UC Main and other campuses who are interested in h
 
 ## License
 
-All rights reserved.
+All rights reserved. test
 
 Copyright (c) 2024 **UC Main CSP-S**
 
