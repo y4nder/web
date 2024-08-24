@@ -165,21 +165,20 @@ import CSPSLogo from "~/assets/svg/csps.svg";
 import CSPSCoverLight from "~/assets/svg/csps_cover_light.svg";
 import CSPSCoverDark from "~/assets/svg/csps_cover_dark.svg";
 
-import Gesim from '~/assets/img/profile/csps_gesim.jpg';
-import Lisondra from '~/assets/img/profile/csps_lisondra.jpg';
-import Ampatin from '~/assets/img/profile/csps_ampatin.jpg';
-import Gabuya from '~/assets/img/profile/csps_gabuya.jpg';
-import Reyes from '~/assets/img/profile/csps_reyes.jpg';
-import Lange from '~/assets/img/profile/csps_lange.jpg';
-import Bacalso from '~/assets/img/profile/csps_bacalso.jpg';
-import Branzuela from '~/assets/img/profile/csps_branzuela.jpg';
-import Sedigo from '~/assets/img/profile/csps_sedigo.jpg';
-import Fabroa from '~/assets/img/profile/csps_fabroa.jpg';
-import Tonilon from '~/assets/img/profile/csps_tonilon.jpg';
+import Catan from "~/assets/img/profile/csps_catan.jpg";
+import Umpar from "~/assets/img/profile/csps_umpar.jpg";
+import Fuentes from "~/assets/img/profile/csps_fuentes.jpg";
+import Cataluna from "~/assets/img/profile/csps_cataluna.jpg";
+import Navarez from "~/assets/img/profile/csps_navarez.jpg";
+import Navares from "~/assets/img/profile/csps_navares.jpg";
+import Sanchez from "~/assets/img/profile/csps_sanchez.jpg";
+import Godinez from "~/assets/img/profile/csps_godinez.jpg";
+import Pondar from "~/assets/img/profile/csps_pondar.jpg";
+import Abella from "~/assets/img/profile/csps_abella.jpg";
 
-import Pondar from '~/assets/img/profile/csps_pondar.jpg';
-import Umpar from '~/assets/img/profile/csps_umpar.jpg';
-import Ocampo from '~/assets/img/profile/csps_ocampo.jpg';
+import Blanco from "~/assets/img/profile/csps_blanco.jpg";
+import Dicdiquin from "~/assets/img/profile/csps_dicdiquin.jpg";
+import Montecillo from "~/assets/img/profile/csps_montecillo.jpg";
 
 import type { SwiperContainer } from 'swiper/element';
 import { register } from 'swiper/element/bundle';
@@ -197,23 +196,22 @@ let instance: Typed | undefined;
 const intro = ref();
 const store = useStore();
 const officers: Officer[] = [
-  { name: "Jewel Cedrick Gesim", position: "President", thumb: Gesim },
-  { name: "Brian Keith Lisondra", position: "VP - Internal", thumb: Lisondra },
-  { name: "Jeremy Andy Ampatin", position: "VP - External", thumb: Ampatin },
-  { name: "Krisha Mae Gabuya", position: "Secretary", thumb: Gabuya },
-  { name: "Enrico Bacalso", position: "Treasurer", thumb: Bacalso },
-  { name: "Marianne Leigh Reyes", position: "Assistant Treasurer", thumb: Reyes },
-  { name: "Christine Lange", position: "Auditor", thumb: Lange },
-  { name: "Raymond Benedict Branzuela", position: "P.R.O", thumb: Branzuela },
-  { name: "Andrian Paul Sedigo", position: "P.I.O", thumb: Sedigo },
-  { name: "Maverick Fabroa", position: "Project Manager / Developer", thumb: Fabroa },
-  { name: "Michael Tonilon", position: "Developer", thumb: Tonilon },
+    { name: "Diether Catan", position: "President", thumb: Catan },
+    { name: "Norhanah Umpar", position: "VP - Internal", thumb: Umpar },
+    { name: "Diane Sophia Fuentes", position: "VP - External", thumb: Fuentes },
+    { name: "Geraldyn Cataluña", position: "Secretary", thumb: Cataluna },
+    { name: "Vannessa Ruth Navarez ", position: "Treasurer", thumb: Navarez },
+    { name: "Rica Jane Navares", position: "Assistant Treasurer", thumb: Navares },
+    { name: "Lester Lawrence Sanchez", position: "Auditor", thumb: Sanchez },
+    { name: "Alexia Chloe Godinez", position: "P.R.O", thumb: Godinez },
+    { name: "Ramie Theofil Pondar", position: "P.I.O", thumb: Pondar },
+    { name: "Kenth Amjay Abella", position: "Chief Volunteer", thumb: Abella },
 ];
 
 const representatives: Officer[] = [
-  { name: "Ramie Theofil Pondar", position: "1st Year Representative", thumb: Pondar },
-  { name: "Norhanah Umpar", position: "2nd Year Representative", thumb: Umpar },
-  { name: "Mark Danielle Ocampo", position: "3rd Year Representative", thumb: Ocampo },
+    { name: "Janelie Blanco", position: "1st Year Representative", thumb: Blanco },
+    { name: "Niño Jay Dicdiquin", position: "2nd Year Representative", thumb: Dicdiquin },
+    { name: "Christopher Lloyd Montecillo", position: "3rd Year Representative", thumb: Montecillo },
 ];
 
 const message = `
